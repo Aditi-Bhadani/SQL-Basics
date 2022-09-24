@@ -1,0 +1,57 @@
+Sequence: The clauses of the subselect are processed in the following sequence (DB2):
+FROM clause
+WHERE clause 
+GROUP BY clause
+HAVING clause 
+SELECT clause 
+ORDER BY clause 
+FETCH FIRST clause
+
+
+create table person 
+            ( Title varchar(100), 
+            Age int,
+            Sex varchar(10),
+            City varchar(100)
+            )
+
+insert into person values ('Vaisnavi',NULL,'Female','Delhi')
+
+desc person
+                          
+create table parents 
+            ( surname varchar(100), 
+            birth_age int NOT NULL,
+            gender varchar(10),
+            place varchar(100) NOT NULL
+            )                         
+     
+insert into parents values ('Pallavi',52,'Female','GRD')                           
+                        
+desc parents
+
+select * from person 
+
+select * from person where city='GRD'
+
+select * from person where age=24
+
+select * from person where age>=22 and age<=25
+
+select * from person where age<=26 and sex='Male' and title like '%h'
+
+select * from person where age is not null
+
+select * from person where sex='Female' and city != 'Delhi'
+
+select * from person where sex='Male' and age>24 and city!='GRD' and city!='Delhi'
+
+select * from person order by title
+select * from person order by title desc 
+
+#sub-querry
+select * from person where age = ( select max(age) as age from person ) 
+
+select * from person where age = ( select min(age) from person where city='Delhi' and sex='Female'  )
+#Top three age
+select * from (select * from person where age is not null order by age desc ) fetch first 3 rows only
